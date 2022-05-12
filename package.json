@@ -1,7 +1,6 @@
 {
   "name": "graphql-schema-modules",
   "version": "0.0.4",
-  "type": "module",
   "engines": {
     "node": ">=4.x",
     "npm": ">=3.x"
