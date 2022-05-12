@@ -11,7 +11,7 @@
   "scripts": {
     "build-test": "npm run build && npm test",
     "test": "./node_modules/.bin/mocha test-dist/*.test.js",
-    "build": "./node_modules/.bin/babel src --out-dir dist --out-file-extension .mjs && ./node_modules/.bin/babel test --out-dir test-dist",
+    "build": "./node_modules/.bin/babel src --out-dir dist && ./node_modules/.bin/babel test --out-dir test-dist",
     "preversion": "npm run build-test",
     "example": "./node_modules/.bin/babel-node ./example/buildSchema.js"
   },
