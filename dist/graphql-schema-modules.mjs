@@ -1,30 +1,39 @@
-
 import gql from 'graphql-tag';
 import { print } from 'graphql/language/printer';
 import deepExtend from 'deep-extend';
 import requireAll from 'require-all';
 import shim from 'core-js/fn/object/values';
-
 export function mergeModules(modules = []) {
-  const typeDefs = mergeTypeDefs(modules.filter(({ typeDefs }) => !!typeDefs).map(({ typeDefs }) => typeDefs));
-  const resolvers = mergeResolvers(modules.filter(({ resolvers }) => !!resolvers).map(({ resolvers }) => resolvers));
+  const typeDefs = mergeTypeDefs(modules.filter(({
+    typeDefs
+  }) => !!typeDefs).map(({
+    typeDefs
+  }) => typeDefs));
+  const resolvers = mergeResolvers(modules.filter(({
+    resolvers
+  }) => !!resolvers).map(({
+    resolvers
+  }) => resolvers));
   return {
     typeDefs: [typeDefs],
     resolvers
   };
-};
-
+}
+;
 export function loadModules(directory) {
   const modules = [];
   requireAll({
     dirname: directory,
     recursive: true,
+
     resolve(mod) {
       modules.push(mod);
     }
+
   });
   return mergeModules(modules);
-};
+}
+;
 
 const typeDefsToStr = (typeDefs = []) => {
   if (typeof typeDefs === 'string') {
@@ -42,11 +51,13 @@ const mergeTypeDefs = (typeDefs = []) => {
   typeDefs.forEach(graphql => {
     graphql.definitions.forEach(def => {
       const name = def.name.value;
+
       if (rootTypes[name]) {
         // throw error if enum with same name is defined twice
         if (rootTypes[name].kind === 'EnumTypeDefinition') {
           throw new Error(`duplicate enum definition '${rootTypes[name].name.value}'`);
         }
+
         rootTypes[name].fields = rootTypes[name].fields.concat(def.fields);
       } else {
         rootTypes[name] = def;
